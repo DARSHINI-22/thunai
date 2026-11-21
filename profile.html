@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Student Profile – THUNAI</title>
+  <meta name="description" content="Create your THUNAI student profile. Your details are saved only on this device.">
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/main.js" defer></script>
+  <script src="js/profile.js" defer></script>
+</head>
+<body id="top">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="THUNAI home">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+          <rect width="32" height="32" rx="8" fill="#0f766e"/>
+          <path d="M8 22V10l8 6 8-6v12" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+        </svg>
+        <span class="brand-name">THUNAI</span>
+      </a>
+
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="Toggle navigation menu">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+
+      <nav class="site-nav" aria-label="Primary">
+        <ul class="nav-list" id="primary-nav">
+          <li><a class="nav-link" href="index.html#features">Features</a></li>
+          <li><a class="nav-link" href="index.html#how-it-works">How It Works</a></li>
+          <li><a class="btn btn-primary nav-cta" href="profile.html">Get Started</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="section profile-section" aria-labelledby="profile-title">
+      <div class="container">
+        <div class="profile-card">
+          <h1 id="profile-title" class="section-title">Create your student profile</h1>
+          <p class="section-intro">Share a few details about your studies. They are saved only on this device and are used to show benefits you may be entitled to.</p>
+
+          <form id="profile-form" novalidate>
+            <div class="form-grid">
+              <div class="form-field">
+                <label for="name">Name <span class="optional-mark">(optional)</span></label>
+                <input type="text" id="name" name="name" autocomplete="name" maxlength="100">
+                <p class="field-error" id="name-error" aria-live="polite"></p>
+              </div>
+
+              <div class="form-field">
+                <label for="age">Age <span class="required-mark">(required)</span></label>
+                <input type="number" id="age" name="age" min="14" max="60" inputmode="numeric" required>
+                <p class="field-error" id="age-error" aria-live="polite"></p>
+              </div>
+
+              <div class="form-field">
+                <label for="district">Tamil Nadu district <span class="required-mark">(required)</span></label>
+                <select id="district" name="district" required>
+                  <option value="">Select district</option>
+                  <option value="Ariyalur">Ariyalur</option>
+                  <option value="Chengalpattu">Chengalpattu</option>
+                  <option value="Chennai">Chennai</option>
+                  <option value="Coimbatore">Coimbatore</option>
+                  <option value="Cuddalore">Cuddalore</option>
+                  <option value="Dharmapuri">Dharmapuri</option>
+                  <option value="Dindigul">Dindigul</option>
+                  <option value="Erode">Erode</option>
+                  <option value="Kallakurichi">Kallakurichi</option>
+                  <option value="Kanchipuram">Kanchipuram</option>
+                  <option value="Kanyakumari">Kanyakumari</option>
+                  <option value="Karur">Karur</option>
+                  <option value="Krishnagiri">Krishnagiri</option>
+                  <option value="Madurai">Madurai</option>
+                  <option value="Mayiladuthurai">Mayiladuthurai</option>
+                  <option value="Nagapattinam">Nagapattinam</option>
+                  <option value="Namakkal">Namakkal</option>
+                  <option value="Nilgiris">Nilgiris</option>
+                  <option value="Perambalur">Perambalur</option>
+                  <option value="Pudukkottai">Pudukkottai</option>
+                  <option value="Ramanathapuram">Ramanathapuram</option>
+                  <option value="Ranipet">Ranipet</option>
+                  <option value="Salem">Salem</option>
+                  <option value="Sivaganga">Sivaganga</option>
+                  <option value="Tenkasi">Tenkasi</option>
+                  <option value="Thanjavur">Thanjavur</option>
+                  <option value="Theni">Theni</option>
+                  <option value="Thoothukudi">Thoothukudi</option>
+                  <option value="Tiruchirappalli">Tiruchirappalli</option>
+                  <option value="Tirunelveli">Tirunelveli</option>
+                  <option value="Tirupathur">Tirupathur</option>
+                  <option value="Tiruppur">Tiruppur</option>
+                  <option value="Tiruvallur">Tiruvallur</option>
+                  <option value="Tiruvannamalai">Tiruvannamalai</option>
+                  <option value="Tiruvarur">Tiruvarur</option>
+                  <option value="Vellore">Vellore</option>
+                  <option value="Viluppuram">Viluppuram</option>
+                  <option value="Virudhunagar">Virudhunagar</option>
+                </select>
+                <p class="field-error" id="district-error" aria-live="polite"></p>
+              </div>
+
+              <div class="form-field">
+                <label for="education-level">Education level <span class="required-mark">(required)</span></label>
+                <select id="education-level" name="education-level" required>
+                  <option value="">Select education level</option>
+                  <option value="Undergraduate">Undergraduate</option>
+                  <option value="Postgraduate">Postgraduate</option>
+                  <option value="Diploma">Diploma</option>
+                  <option value="Other">Other</option>
+                </select>
+                <p class="field-error" id="education-level-error" aria-live="polite"></p>
+              </div>
+
+              <div class="form-field">
+                <label for="course">Course <span class="required-mark">(required)</span></label>
+                <input type="text" id="course" name="course" required maxlength="100">
+                <p class="field-error" id="course-error" aria-live="polite"></p>
+              </div>
+
+              <div class="form-field">
+                <label for="college-type">College type <span class="required-mark">(required)</span></label>
+                <select id="college-type" name="college-type" required>
+                  <option value="">Select college type</option>
+                  <option value="Government">Government</option>
+                  <option value="Government-aided">Government-aided</option>
+                  <option value="Private">Private</option>
+                  <option value="Autonomous">Autonomous</option>
+                  <option value="Other">Other</option>
+                </select>
+                <p class="field-error" id="college-type-error" aria-live="polite"></p>
+              </div>
+
+              <div class="form-field">
+                <label for="academic-year">Academic year <span class="required-mark">(required)</span></label>
+                <select id="academic-year" name="academic-year" required>
+                  <option value="">Select academic year</option>
+                  <option value="1st Year">1st Year</option>
+                  <option value="2nd Year">2nd Year</option>
+                  <option value="3rd Year">3rd Year</option>
+                  <option value="4th Year">4th Year</option>
+                  <option value="Other">Other</option>
+                </select>
+                <p class="field-error" id="academic-year-error" aria-live="polite"></p>
+              </div>
+
+              <div class="form-field">
+                <label for="income-range">Annual family income range <span class="required-mark">(required)</span></label>
+                <select id="income-range" name="income-range" required>
+                  <option value="">Select income range</option>
+                  <option value="Below ₹1 lakh">Below ₹1 lakh</option>
+                  <option value="₹1–2.5 lakh">₹1–2.5 lakh</option>
+                  <option value="₹2.5–5 lakh">₹2.5–5 lakh</option>
+                  <option value="₹5–8 lakh">₹5–8 lakh</option>
+                  <option value="Above ₹8 lakh">Above ₹8 lakh</option>
+                </select>
+                <p class="field-error" id="income-range-error" aria-live="polite"></p>
+              </div>
+
+              <fieldset class="form-field form-field-full">
+                <legend>First-generation graduate <span class="required-mark">(required)</span></legend>
+                <div class="radio-options">
+                  <label class="radio-option" for="first-generation-yes">
+                    <input type="radio" id="first-generation-yes" name="first-generation" value="yes">
+                    <span>Yes</span>
+                  </label>
+                  <label class="radio-option" for="first-generation-no">
+                    <input type="radio" id="first-generation-no" name="first-generation" value="no">
+                    <span>No</span>
+                  </label>
+                </div>
+                <p class="field-error" id="first-generation-error" aria-live="polite"></p>
+              </fieldset>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">Continue</button>
+              <button type="button" id="clear-profile" class="btn btn-secondary">Clear profile</button>
+            </div>
+            <div id="form-status" aria-live="polite"></div>
+          </form>
+
+          <section id="saved-summary" class="saved-summary" aria-labelledby="summary-title" hidden>
+            <h2 id="summary-title" class="summary-title">Your saved profile</h2>
+            <dl class="summary-list">
+              <dt>Name</dt>
+              <dd id="summary-name"></dd>
+              <dt>Age</dt>
+              <dd id="summary-age"></dd>
+              <dt>District</dt>
+              <dd id="summary-district"></dd>
+              <dt>Education level</dt>
+              <dd id="summary-education-level"></dd>
+              <dt>Course</dt>
+              <dd id="summary-course"></dd>
+              <dt>College type</dt>
+              <dd id="summary-college-type"></dd>
+              <dt>Academic year</dt>
+              <dd id="summary-academic-year"></dd>
+              <dt>Annual family income</dt>
+              <dd id="summary-income-range"></dd>
+              <dt>First-generation graduate</dt>
+              <dd id="summary-first-generation"></dd>
+            </dl>
+          </section>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <ul class="footer-links">
+        <li><a href="index.html#features">Features</a></li>
+        <li><a href="index.html#how-it-works">How It Works</a></li>
+        <li><a href="profile.html">Get Started</a></li>
+      </ul>
+      <p class="privacy">THUNAI respects your privacy. We collect only what is needed to show you relevant benefits, and never sell your data.</p>
+      <p class="copyright">&copy; THUNAI</p>
+    </div>
+  </footer>
+</body>
+</html>
