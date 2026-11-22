@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>THUNAI – Scholarship Details</title>
+  <meta name="description" content="Detailed information for one THUNAI scholarship record, taken from its official source notes. Check the official source before you apply.">
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/main.js" defer></script>
+  <script src="js/schemes.js" defer></script>
+  <script src="js/scheme-details-model.js" defer></script>
+  <script src="js/scheme-details.js" defer></script>
+  <script src="js/document-checklist-model.js" defer></script>
+  <script src="js/document-checklist.js" defer></script>
+  <script src="js/application-guidance-model.js" defer></script>
+  <script src="js/application-guidance.js" defer></script>
+  <script src="js/saved-scholarships-model.js" defer></script>
+  <script src="js/saved-scholarships.js" defer></script>
+  <script src="js/application-tracker-model.js" defer></script>
+  <script src="js/application-tracker.js" defer></script>
+  <script src="js/comparison-selection-model.js" defer></script>
+  <script src="js/comparison-model.js" defer></script>
+  <script src="js/comparison-ui.js" defer></script>
+</head>
+<body id="top">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="THUNAI home">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+          <rect width="32" height="32" rx="8" fill="#0f766e"/>
+          <path d="M8 22V10l8 6 8-6v12" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+        </svg>
+        <span class="brand-name">THUNAI</span>
+      </a>
+
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="Toggle navigation menu">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+
+      <nav class="site-nav" aria-label="Primary">
+        <ul class="nav-list" id="primary-nav">
+          <li><a class="nav-link" href="index.html#features">Features</a></li>
+          <li><a class="nav-link" href="index.html#how-it-works">How It Works</a></li>
+          <li><a class="btn btn-primary nav-cta" href="profile.html">Get Started</a></li>
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li><a href="saved.html">Saved</a></li>
+          <li><a href="tracker.html">Tracker</a></li>
+          <li><a href="comparison.html">Compare</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="section profile-section" aria-labelledby="details-title">
+      <div class="container">
+        <p class="details-back"><a class="btn btn-secondary" href="results.html">Back to results</a></p>
+
+        <h1 id="details-title" class="section-title">Scholarship details</h1>
+        <p class="section-intro">Based only on the official source notes stored for this scholarship.</p>
+
+        <div id="details-status" aria-live="polite" hidden></div>
+
+        <div id="details-view" class="details-grid" hidden>
+          <div id="saved-toggle-slot" class="saved-toggle-slot"></div>
+          <div id="tracker-slot" class="tracker-slot"></div>
+          <div id="compare-slot" class="compare-slot"></div>
+          <section class="details-section details-card" aria-labelledby="h-overview">
+            <h2 id="h-overview">Overview</h2>
+            <div id="sec-overview"></div>
+          </section>
+
+          <section class="details-section details-card" aria-labelledby="h-categories">
+            <h2 id="h-categories">Eligible categories</h2>
+            <div id="sec-categories"></div>
+          </section>
+
+          <section class="details-section details-card" aria-labelledby="h-education">
+            <h2 id="h-education">Education requirements</h2>
+            <div id="sec-education"></div>
+          </section>
+
+          <section class="details-section details-card" aria-labelledby="h-institution">
+            <h2 id="h-institution">Institution requirements</h2>
+            <div id="sec-institution"></div>
+          </section>
+
+          <section class="details-section details-card" aria-labelledby="h-income">
+            <h2 id="h-income">Income requirements</h2>
+            <div id="sec-income"></div>
+          </section>
+
+          <section class="details-section details-card" aria-labelledby="h-other">
+            <h2 id="h-other">Other eligibility conditions</h2>
+            <div id="sec-other"></div>
+          </section>
+
+          <section class="details-section details-card" aria-labelledby="h-benefits">
+            <h2 id="h-benefits">Benefits</h2>
+            <div id="sec-benefits"></div>
+          </section>
+
+          <section class="details-section details-card" aria-labelledby="h-documents">
+            <h2 id="h-documents">Required documents</h2>
+            <div id="sec-documents"></div>
+          </section>
+
+          <section id="checklist-card" class="details-section details-card" aria-labelledby="h-checklist">
+            <h2 id="h-checklist">Document checklist</h2>
+            <div id="checklist-body"></div>
+            <p id="checklist-progress" class="checklist-progress" aria-live="polite"></p>
+            <button type="button" id="checklist-reset" class="btn btn-secondary" hidden>Reset checklist</button>
+          </section>
+
+          <section class="details-section details-card" aria-labelledby="h-procedure">
+            <h2 id="h-procedure">Application procedure</h2>
+            <div id="sec-procedure"></div>
+          </section>
+
+          <section id="guidance-card" class="details-section details-card" aria-labelledby="h-guidance">
+            <h2 id="h-guidance">Application guidance</h2>
+            <div id="guidance-body"></div>
+          </section>
+
+          <section class="details-section details-card" aria-labelledby="h-deadline">
+            <h2 id="h-deadline">Application deadline</h2>
+            <div id="sec-deadline"></div>
+          </section>
+
+          <section class="details-section details-card" aria-labelledby="h-status">
+            <h2 id="h-status">Application status</h2>
+            <div id="sec-status"></div>
+          </section>
+
+          <section class="details-section details-card" aria-labelledby="h-source">
+            <h2 id="h-source">Official source</h2>
+            <div id="sec-source"></div>
+          </section>
+
+          <section class="details-section details-card" aria-labelledby="h-verification">
+            <h2 id="h-verification">Verification</h2>
+            <div id="sec-verification"></div>
+          </section>
+
+          <section class="details-section details-card" aria-labelledby="h-selection">
+            <h2 id="h-selection">Selection notes</h2>
+            <div id="sec-selection"></div>
+          </section>
+        </div>
+
+        <p class="details-back"><a class="btn btn-secondary" href="results.html">Back to results</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <ul class="footer-links">
+        <li><a href="index.html#features">Features</a></li>
+        <li><a href="index.html#how-it-works">How It Works</a></li>
+        <li><a href="profile.html">Get Started</a></li>
+      </ul>
+      <p class="privacy">THUNAI respects your privacy. We collect only what is needed to show you relevant benefits, and never sell your data.</p>
+      <p class="copyright">&copy; THUNAI</p>
+    </div>
+  </footer>
+</body>
+</html>

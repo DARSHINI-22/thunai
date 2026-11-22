@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Application Tracker | THUNAI</title>
+  <meta name="description" content="Track the status of your scholarship applications on this device.">
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/main.js" defer></script>
+  <script src="js/schemes.js" defer></script>
+  <script src="js/saved-scholarships-model.js" defer></script>
+  <script src="js/application-tracker-model.js" defer></script>
+  <script src="js/saved-scholarships.js" defer></script>
+  <script src="js/application-tracker.js" defer></script>
+</head>
+<body id="top">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="THUNAI home">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+          <rect width="32" height="32" rx="8" fill="#0f766e"/>
+          <path d="M8 22V10l8 6 8-6v12" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+        </svg>
+        <span class="brand-name">THUNAI</span>
+      </a>
+
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="Toggle navigation menu">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+
+      <nav class="site-nav" aria-label="Primary">
+        <ul class="nav-list" id="primary-nav">
+          <li><a class="nav-link" href="index.html#features">Features</a></li>
+          <li><a class="nav-link" href="index.html#how-it-works">How It Works</a></li>
+          <li><a class="btn btn-primary nav-cta" href="profile.html">Get Started</a></li>
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li><a href="saved.html">Saved</a></li>
+          <li><a href="tracker.html">Tracker</a></li>
+          <li><a href="comparison.html">Compare</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="section profile-section" aria-labelledby="tracker-heading">
+      <div class="container">
+        <h1 id="tracker-heading" class="section-title">Application tracker</h1>
+        <p id="tracker-count" class="saved-count" aria-live="polite"></p>
+        <p id="tracker-status" class="tracker-status" aria-live="polite"></p>
+
+        <section id="tracker-empty" class="details-section details-card" hidden>
+          <p>You are not tracking any applications yet.</p>
+          <p>Open a scholarship's details page and select Track application to add it here.</p>
+          <a class="btn btn-primary" href="results.html">Go to results</a>
+        </section>
+
+        <div id="tracker-list" class="results-list"></div>
+        <p id="tracker-note" class="tracker-note"></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <ul class="footer-links">
+        <li><a href="index.html#features">Features</a></li>
+        <li><a href="index.html#how-it-works">How It Works</a></li>
+        <li><a href="profile.html">Get Started</a></li>
+      </ul>
+      <p class="privacy">THUNAI respects your privacy. We collect only what is needed to show you relevant benefits, and never sell your data.</p>
+      <p class="copyright">&copy; THUNAI</p>
+    </div>
+  </footer>
+</body>
+</html>

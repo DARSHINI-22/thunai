@@ -175,6 +175,9 @@
       selectionWrap.appendChild(el('p', 'scheme-note', 'Meeting these criteria does not guarantee an award.'));
       article.appendChild(selectionWrap);
     }
+    var detailsLink = el('a', 'btn btn-secondary scheme-details-link', 'View details');
+    detailsLink.href = 'scheme-details.html?id=' + encodeURIComponent(item.schemeId);
+    article.appendChild(detailsLink);
     return article;
   }
 

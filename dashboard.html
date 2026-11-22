@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Student Dashboard | THUNAI</title>
+  <meta name="description" content="A summary of your scholarship activity on this device: profile, matches, saved scholarships and application tracker.">
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/main.js" defer></script>
+  <script src="js/schemes.js" defer></script>
+  <script src="js/eligibility.js" defer></script>
+  <script src="js/saved-scholarships-model.js" defer></script>
+  <script src="js/application-tracker-model.js" defer></script>
+  <script src="js/comparison-selection-model.js" defer></script>
+  <script src="js/profile-model.js" defer></script>
+  <script src="js/dashboard-model.js" defer></script>
+  <script src="js/dashboard.js" defer></script>
+</head>
+<body id="top">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="THUNAI home">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+          <rect width="32" height="32" rx="8" fill="#0f766e"/>
+          <path d="M8 22V10l8 6 8-6v12" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+        </svg>
+        <span class="brand-name">THUNAI</span>
+      </a>
+
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="Toggle navigation menu">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+
+      <nav class="site-nav" aria-label="Primary">
+        <ul class="nav-list" id="primary-nav">
+          <li><a class="nav-link" href="index.html#features">Features</a></li>
+          <li><a class="nav-link" href="index.html#how-it-works">How It Works</a></li>
+          <li><a class="btn btn-primary nav-cta" href="profile.html">Get Started</a></li>
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li><a href="saved.html">Saved</a></li>
+          <li><a href="tracker.html">Tracker</a></li>
+          <li><a href="comparison.html">Compare</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <h1>Student dashboard</h1>
+    <p class="tracker-note">Overview of your scholarship activity on this device. Status values are self-reported by you and are not verified by scholarship providers.</p>
+    <p id="dash-status" class="tracker-status" aria-live="polite" hidden></p>
+    <section id="dash-profile" class="details-section details-card" aria-labelledby="dash-h-profile"><h2 id="dash-h-profile">Profile summary</h2><div id="dash-profile-body"></div><p><a class="btn btn-secondary" href="profile.html">Edit profile</a></p></section>
+    <section id="dash-overview" class="details-section details-card" aria-labelledby="dash-h-overview"><h2 id="dash-h-overview">Scholarship overview</h2><ul id="dash-overview-list" class="criteria-list"></ul><p id="dash-submitted-note" class="tracker-note"></p></section>
+    <section id="dash-matches" class="details-section details-card" aria-labelledby="dash-h-matches"><h2 id="dash-h-matches">Matched scholarships</h2><div id="dash-matches-body"></div><p><a class="btn btn-secondary" href="results.html">See all eligibility results</a></p></section>
+    <section id="dash-saved" class="details-section details-card" aria-labelledby="dash-h-saved"><h2 id="dash-h-saved">Saved scholarships</h2><div id="dash-saved-body"></div><p><a class="btn btn-secondary" href="saved.html">View all saved scholarships</a></p></section>
+    <section id="dash-tracker" class="details-section details-card" aria-labelledby="dash-h-tracker"><h2 id="dash-h-tracker">Application tracker</h2><div id="dash-tracker-body"></div><p><a class="btn btn-secondary" href="tracker.html">Open the full tracker</a></p></section>
+    <section id="dash-actions" class="details-section details-card" aria-labelledby="dash-h-actions"><h2 id="dash-h-actions">Quick actions</h2><ul id="dash-actions-list" class="criteria-list"></ul></section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <ul class="footer-links">
+        <li><a href="index.html#features">Features</a></li>
+        <li><a href="index.html#how-it-works">How It Works</a></li>
+        <li><a href="profile.html">Get Started</a></li>
+      </ul>
+      <p class="privacy">THUNAI respects your privacy. We collect only what is needed to show you relevant benefits, and never sell your data.</p>
+      <p class="copyright">&copy; THUNAI</p>
+    </div>
+  </footer>
+</body>
+</html>
