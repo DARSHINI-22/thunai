@@ -22,9 +22,9 @@ var THUNAI_SCHEMES = [
     ],
     rules: [
       { id: 'tn-bc-category', field: 'category', operator: 'in', value: ['BC', 'MBC', 'DNC'], required: true, label: 'Belongs to BC, MBC or DNC community (category not collected in profile)' },
-      { id: 'tn-bc-domicile', field: 'tnDomicile', operator: 'equals', value: 'yes', required: true, label: 'Native of Tamil Nadu (not collected in profile)' },
+      { id: 'tn-bc-domicile', field: 'tnDomicile', operator: 'equals', value: 'yes', required: true, unknownValues: ['notSure'], label: 'Native of Tamil Nadu (not collected in profile)' },
       { id: 'tn-bc-income', field: 'incomeRange', operator: 'in', value: ['Below ₹1 lakh', '₹1–2.5 lakh'], required: true, label: 'Annual family income does not exceed ₹2,50,000' },
-      { id: 'tn-bc-course', field: 'eligibleCourseListed', operator: 'equals', value: 'yes', required: true, label: 'Course is one of the listed courses: ITI, Polytechnic Diploma, Postgraduate, Professional or PhD (course type not collected in profile)' }
+      { id: 'tn-bc-course', field: 'eligibleCourseListed', operator: 'equals', value: 'yes', required: true, unknownValues: ['notSure'], label: 'Course is one of the listed courses: ITI, Polytechnic Diploma, Postgraduate, Professional or PhD (course type not collected in profile)' }
     ],
     notes: 'Documents not individually specified in the source. Deadline not published in the source. Listed courses are described as include, so course eligibility is not auto-matched. Do not map educationLevel values to courses.'
   },
@@ -48,7 +48,7 @@ var THUNAI_SCHEMES = [
     ],
     rules: [
       { id: 'tnc-category', field: 'category', operator: 'in', value: ['BC', 'MBC', 'DNC'], required: true, label: 'Belongs to BC, MBC or DNC (category not collected in profile)' },
-      { id: 'tnc-domicile', field: 'tnDomicile', operator: 'equals', value: 'yes', required: true, label: 'Native of Tamil Nadu (not collected in profile)' },
+      { id: 'tnc-domicile', field: 'tnDomicile', operator: 'equals', value: 'yes', required: true, unknownValues: ['notSure'], label: 'Native of Tamil Nadu (not collected in profile)' },
       { id: 'tnc-education', field: 'educationLevel', operator: 'in', value: ['Undergraduate', 'Postgraduate'], required: true, unknownValues: ['Other'], label: 'Pursuing UG or PG' },
       { id: 'tnc-institution', field: 'institution', operator: 'in', value: ['IIT', 'IIM', 'IIIT', 'NIT', 'Central University'], required: true, unknownValues: ['Other'], label: 'Studying at an IIT, IIM, IIIT, NIT or Central University (institution not collected in profile)' },
       { id: 'tnc-income', field: 'incomeRange', operator: 'in', value: ['Below ₹1 lakh', '₹1–2.5 lakh'], required: true, label: 'Annual family income does not exceed ₹2,50,000' }
@@ -73,11 +73,11 @@ var THUNAI_SCHEMES = [
     applicationSteps: null,
     rules: [
       { id: 'pmusp-percentile', field: 'classXiiPercentileRank', operator: 'greaterThan', value: 80, required: true, label: 'Above the 80th percentile rank of successful Class XII candidates in the relevant board and stream (percentile rank, not marks percentage)' },
-      { id: 'pmusp-regular', field: 'regularCourse', operator: 'equals', value: 'yes', required: true, label: 'Regular course, not correspondence or distance (not collected in profile)' },
+      { id: 'pmusp-regular', field: 'regularCourse', operator: 'equals', value: 'yes', required: true, unknownValues: ['notSure'], label: 'Regular course, not correspondence or distance (not collected in profile)' },
       { id: 'pmusp-income', field: 'annualFamilyIncome', operator: 'maxNumber', value: 450000, required: true, label: 'Annual family income does not exceed ₹4,50,000 (numeric annual family income is collected in the profile; leave blank if not known)' },
-      { id: 'pmusp-other-scholarship', field: 'otherScholarship', operator: 'equals', value: 'no', required: true, label: 'Not receiving another scholarship or fee reimbursement (not collected in profile)' },
+      { id: 'pmusp-other-scholarship', field: 'otherScholarship', operator: 'equals', value: 'no', required: true, unknownValues: ['notSure'], label: 'Not receiving another scholarship or fee reimbursement (not collected in profile)' },
       { id: 'pmusp-diploma', field: 'educationLevel', operator: 'notEquals', value: 'Diploma', required: true, unknownValues: ['Other'], label: 'Not a diploma student (diploma students are not eligible)' },
-      { id: 'pmusp-drop', field: 'droppedAfterXii', operator: 'equals', value: 'no', required: true, label: 'Did not take a drop after Class XII (not collected in profile)' }
+      { id: 'pmusp-drop', field: 'droppedAfterXii', operator: 'equals', value: 'no', required: true, unknownValues: ['notSure'], label: 'Did not take a drop after Class XII (not collected in profile)' }
     ],
     notes: 'Source is the 2025-26 FAQ; cycle-specific conditions and deadlines may change. Deadline null until a current official cycle notification is confirmed. Documents not inferred. The engine checks 80 or more for the percentile, so the strict above-80th boundary is not exact.'
   },
@@ -99,7 +99,7 @@ var THUNAI_SCHEMES = [
     rules: [
       { id: 'yasasvi-category', field: 'category', operator: 'in', value: ['OBC', 'EBC', 'DNT'], required: true, label: 'Belongs to OBC, EBC or DNT (category not collected in profile)' },
       { id: 'yasasvi-income', field: 'incomeRange', operator: 'in', value: ['Below ₹1 lakh', '₹1–2.5 lakh'], required: true, label: 'Total annual family income does not exceed ₹2,50,000' },
-      { id: 'yasasvi-full-time', field: 'fullTimeCourse', operator: 'equals', value: 'yes', required: true, label: 'Full-time prescribed course (not collected in profile)' },
+      { id: 'yasasvi-full-time', field: 'fullTimeCourse', operator: 'equals', value: 'yes', required: true, unknownValues: ['notSure'], label: 'Full-time prescribed course (not collected in profile)' },
       { id: 'yasasvi-institution', field: 'institutionListed', operator: 'equals', value: 'yes', required: true, unknownValues: ['notSure'], label: 'Institution notified by the Ministry (institution not collected in profile)' }
     ],
     notes: 'Students must apply annually, including renewals. Official 2026-27 institution allocation listing: https://socialjustice.gov.in/index.php/schemes/110. Documents unknown. Deadline null until a current student application notification is confirmed. Scholarships are limited by institutional slots and selection criteria.',
@@ -123,7 +123,7 @@ var THUNAI_SCHEMES = [
     rules: [
       { id: 'nst-category', field: 'category', operator: 'equals', value: 'ST', required: true, label: 'Belongs to Scheduled Tribe (category not collected in profile)' },
       { id: 'nst-income', field: 'annualFamilyIncome', operator: 'maxNumber', value: 600000, required: true, label: 'Annual family income from all sources does not exceed ₹6,00,000 (numeric annual family income is collected in the profile; leave blank if not known)' },
-      { id: 'nst-course', field: 'coursePrescribed', operator: 'equals', value: 'yes', required: true, label: 'Prescribed course (not collected in profile)' },
+      { id: 'nst-course', field: 'coursePrescribed', operator: 'equals', value: 'yes', required: true, unknownValues: ['notSure'], label: 'Prescribed course (not collected in profile)' },
       { id: 'nst-institution', field: 'institutionListed', operator: 'equals', value: 'yes', required: true, unknownValues: ['notSure'], label: 'Institution identified by the Ministry (institution not collected in profile)' },
       { id: 'nst-marks', field: 'classXiiMarks', operator: 'nonEmpty', value: null, required: true, label: 'Class XII marks available for merit selection (not collected in profile)' }
     ],

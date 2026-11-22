@@ -4,6 +4,7 @@
   var STORAGE_KEY = 'thunai.studentProfile';
   var STORAGE_ERROR = 'Your profile cannot be saved on this browser.';
   var YES_NO_LABELS = { yes: 'Yes', no: 'No', notSure: 'Not sure' };
+  var YES_NO_KEYS = ['regularCourse', 'otherScholarship', 'droppedAfterXii', 'fullTimeCourse', 'coursePrescribed', 'eligibleCourseListed'];
 
   var form = document.getElementById('profile-form');
   if (!form) {
@@ -46,7 +47,27 @@
     { key: 'annualFamilyIncome', ids: ['annual-family-income'],
       errorId: 'annual-family-income-error', summaryId: 'summary-annual-income' },
     { key: 'classXiiPercentileRank', ids: ['class-xii-percentile-rank'],
-      errorId: 'class-xii-percentile-rank-error', summaryId: 'summary-class-xii-percentile-rank' }
+      errorId: 'class-xii-percentile-rank-error', summaryId: 'summary-class-xii-percentile-rank' },
+    { key: 'regularCourse', radioName: 'regular-course',
+      ids: ['regular-course-yes', 'regular-course-no', 'regular-course-not-sure'],
+      errorId: 'regular-course-error', summaryId: 'summary-regular-course' },
+    { key: 'otherScholarship', radioName: 'other-scholarship',
+      ids: ['other-scholarship-yes', 'other-scholarship-no', 'other-scholarship-not-sure'],
+      errorId: 'other-scholarship-error', summaryId: 'summary-other-scholarship' },
+    { key: 'droppedAfterXii', radioName: 'dropped-after-xii',
+      ids: ['dropped-after-xii-yes', 'dropped-after-xii-no', 'dropped-after-xii-not-sure'],
+      errorId: 'dropped-after-xii-error', summaryId: 'summary-dropped-after-xii' },
+    { key: 'fullTimeCourse', radioName: 'full-time-course',
+      ids: ['full-time-course-yes', 'full-time-course-no', 'full-time-course-not-sure'],
+      errorId: 'full-time-course-error', summaryId: 'summary-full-time-course' },
+    { key: 'coursePrescribed', radioName: 'course-prescribed',
+      ids: ['course-prescribed-yes', 'course-prescribed-no', 'course-prescribed-not-sure'],
+      errorId: 'course-prescribed-error', summaryId: 'summary-course-prescribed' },
+    { key: 'eligibleCourseListed', radioName: 'eligible-course-listed',
+      ids: ['eligible-course-listed-yes', 'eligible-course-listed-no', 'eligible-course-listed-not-sure'],
+      errorId: 'eligible-course-listed-error', summaryId: 'summary-eligible-course-listed' },
+    { key: 'classXiiMarks', ids: ['class-xii-marks'],
+      errorId: 'class-xii-marks-error', summaryId: 'summary-class-xii-marks' }
   ];
 
   function getElement(id) {
@@ -132,8 +153,11 @@
     if (!value) {
       return model.OPTIONAL_KEYS.indexOf(key) !== -1 ? 'Not provided' : String(value);
     }
-    if (key === 'tnDomicile' || key === 'institutionListed') {
+    if (key === 'tnDomicile' || key === 'institutionListed' || YES_NO_KEYS.indexOf(key) !== -1) {
       return YES_NO_LABELS[value];
+    }
+    if (key === 'classXiiMarks') {
+      return value + '%';
     }
     if (key === 'annualFamilyIncome') {
       return '\u20B9' + value;

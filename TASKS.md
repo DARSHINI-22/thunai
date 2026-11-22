@@ -75,3 +75,25 @@
 
 - [ ] Milestone 14: browser verification of the dashboard (rendering, layout at 320-1024 px, keyboard, console) - NOT run.
 - [ ] Milestone 14: HTML lint of dashboard.html and the modified nav pages - not run (no linter available).
+
+
+## Final QA audit
+- Branch: audit/final-qa (created from main; no commits).
+- Node tests run this session, all exit 0: application-guidance, application-tracker, comparison-ui, comparison, dashboard, document-checklist, eligibility, profile-model, results, saved-scholarships, scheme-details, verification (12 files). About 346 PASS lines counted per the tester; seven files were truncated, so their counts came from summary lines.
+- Syntax: node --check passed for all 21 files in js/.
+- HTML references: all scripts and stylesheets referenced by index.html, profile.html and results.html exist.
+- Not confirmed: the try around js/dashboard.js line 88; invalid stored profile handling (js/profile.js ~203-212, Milestone 7 above); empty-state rendering for corrupt "{bad" storage.
+- No confirmed critical bug. No code changed in this audit.
+- NOT RUN in a browser: full journey, console capture, overflow at 320/375/768/1024 px, mobile menu toggle. Milestone 12 (tracker) and Milestone 14 (dashboard) browser checks remain open.
+- Official scheme verification: five source-checked records, not independently verified. No scheme is verified or open; applicationStatus unknown.
+- Open items above are left unticked: Milestone 7 invalid stored profile, Milestone 8A two unconfirmed source observations.
+
+
+## Profile improvement and scholarship details fix
+- [x] Scholarship details fix: js/scheme-details.js fillVerification and fillOverview signatures changed to (view, box) to match the section loop.
+- [x] Profile improvement: seven optional profile fields added (regularCourse, otherScholarship, droppedAfterXii, fullTimeCourse, coursePrescribed, eligibleCourseListed, classXiiMarks), mapped to existing rules; notSure treated as unknown in js/schemes.js.
+- [ ] Browser verification of the profile fields (render, input behaviour, save, reload, marks vs percentile, notSure in results, editing updates results, console) - NOT RUN.
+- [ ] Browser check of the five scholarship detail links after the fix - NOT RUN in this round.
+- [ ] Stop the server on port 8080 (PID 17920), started for the browser attempt and not stopped.
+
+
