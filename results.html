@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>THUNAI – Eligibility Results</title>
+  <meta name="description" content="Your THUNAI eligibility results, based only on the student profile saved on this device.">
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/main.js" defer></script>
+  <script src="js/schemes.js" defer></script>
+  <script src="js/eligibility.js" defer></script>
+  <script src="js/results.js" defer></script>
+</head>
+<body id="top">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html" aria-label="THUNAI home">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+          <rect width="32" height="32" rx="8" fill="#0f766e"/>
+          <path d="M8 22V10l8 6 8-6v12" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>
+        </svg>
+        <span class="brand-name">THUNAI</span>
+      </a>
+
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="Toggle navigation menu">
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+        <span class="nav-toggle-bar"></span>
+      </button>
+
+      <nav class="site-nav" aria-label="Primary">
+        <ul class="nav-list" id="primary-nav">
+          <li><a class="nav-link" href="index.html#features">Features</a></li>
+          <li><a class="nav-link" href="index.html#how-it-works">How It Works</a></li>
+          <li><a class="btn btn-primary nav-cta" href="profile.html">Get Started</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="section profile-section" aria-labelledby="results-heading">
+      <div class="container">
+        <h1 id="results-heading" class="section-title">Your eligibility results</h1>
+        <p class="section-intro">Based only on the information in your profile.</p>
+        <p class="results-notice">Scheme information is source-checked against official government sources but not independently verified. Application deadlines and required documents may be unknown and are shown as unavailable where not published. Check the official source before you apply.</p>
+
+        <div id="results-status" aria-live="polite"></div>
+        <div id="results-list"></div>
+
+        <div class="form-actions">
+          <a class="btn btn-secondary" href="profile.html">Edit profile</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <ul class="footer-links">
+        <li><a href="index.html#features">Features</a></li>
+        <li><a href="index.html#how-it-works">How It Works</a></li>
+        <li><a href="profile.html">Get Started</a></li>
+      </ul>
+      <p class="privacy">THUNAI respects your privacy. We collect only what is needed to show you relevant benefits, and never sell your data.</p>
+      <p class="copyright">&copy; THUNAI</p>
+    </div>
+  </footer>
+</body>
+</html>

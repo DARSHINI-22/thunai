@@ -674,3 +674,169 @@ fieldset:focus-visible {
   }
 }
 
+
+/* Eligibility results (Milestone 4): mobile-first, nothing fixed-width */
+
+.results-notice {
+  max-width: 60ch;
+  margin: 0 auto 1.5rem;
+  padding: 0.75rem 1rem;
+  background: #fef3c7;
+  border: 1px solid #d97706;
+  border-radius: 8px;
+  color: var(--color-text);
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+#results-list {
+  max-width: 100%;
+}
+
+#results-status {
+  margin-bottom: 1rem;
+  color: var(--color-text);
+  overflow-wrap: anywhere;
+}
+
+#results-status a {
+  font-weight: 600;
+}
+
+.results-group {
+  margin-bottom: 2rem;
+  max-width: 100%;
+}
+
+.results-group-title {
+  margin: 0 0 1rem;
+  font-size: 1.25rem;
+  color: var(--color-primary);
+  overflow-wrap: anywhere;
+}
+
+.results-count {
+  font-weight: 400;
+  color: var(--color-muted);
+}
+
+.results-empty {
+  margin: 0;
+  color: var(--color-muted);
+}
+
+.results-list {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.25rem;
+  max-width: 100%;
+}
+
+.scheme-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.scheme-card:hover {
+  transform: none;
+}
+
+.scheme-card h3 {
+  margin: 0;
+}
+
+.status-badge {
+  display: inline-block;
+  align-self: flex-start;
+  max-width: 100%;
+  margin: 0;
+  padding: 0.125rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 1.5;
+  background: var(--color-surface);
+  border: 1px solid currentColor;
+  overflow-wrap: anywhere;
+}
+
+.status-likely {
+  color: var(--color-accent-dark);
+  background: rgba(15, 118, 110, 0.1);
+}
+
+.status-more-info {
+  color: #92400e;
+  background: #fef3c7;
+}
+
+.status-not-eligible {
+  color: #b42318;
+  background: #fef2f2;
+}
+
+.demo-badge {
+  display: inline-block;
+  align-self: flex-start;
+  max-width: 100%;
+  margin: 0;
+  padding: 0.125rem 0.5rem;
+  border-radius: 6px;
+  background: #1e2a52;
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  overflow-wrap: anywhere;
+}
+
+.scheme-description,
+.scheme-explanation {
+  margin: 0;
+  color: var(--color-text);
+  overflow-wrap: anywhere;
+}
+
+.scheme-meta {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--color-muted);
+  overflow-wrap: anywhere;
+}
+
+.scheme-meta a {
+  overflow-wrap: anywhere;
+}
+
+.scheme-note {
+  margin: 0.25rem 0 0;
+  font-size: 0.875rem;
+  font-style: italic;
+  color: var(--color-muted);
+}
+
+.criteria-block h4 {
+  margin: 0.5rem 0 0.25rem;
+  font-size: 0.95rem;
+  color: var(--color-primary);
+}
+
+.criteria-list {
+  margin: 0;
+  padding-left: 1.25rem;
+  color: var(--color-text);
+  font-size: 0.9rem;
+  overflow-wrap: anywhere;
+}
+
+@media (min-width: 768px) {
+  .results-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+  }
+}
+
