@@ -1,4 +1,4 @@
-// THUNAI scheme dataset. Five source-checked central and Tamil Nadu scholarship records.
+// THUNAI scheme dataset. Five central and Tamil Nadu scholarship records. Verification status is per record; see verificationStatus.
 // Application status is unknown for all records. Deadlines and required documents are null
 // where the source does not state them. Profile option values match profile.html.
 var THUNAI_SCHEMES = [
@@ -8,10 +8,11 @@ var THUNAI_SCHEMES = [
     isDemo: false,
     description: 'Post-matric scholarship for students from BC, MBC or DNC communities in Tamil Nadu on listed courses (ITI, Polytechnic Diploma, Postgraduate, Professional and PhD courses).',
     department: 'Tamil Nadu Backward Classes, Most Backward Classes and Minorities Welfare Department',
-    officialUrl: 'https://bcmbcmw.tn.gov.in/welfschemes.htm',
+    officialUrl: 'https://www.bcw.tn.gov.in/sub_page/8',
     applicationPortalUrl: null,
-    lastVerified: '2026-11-21',
-    verificationStatus: 'source-checked',
+    lastVerified: '2026-11-22',
+    verificationStatus: 'partially-verified',
+    verificationNotes: 'Partially verified on 2026-11-22 against bcw.tn.gov.in: the page lists a Post-matric scholarship scheme for college students and one for school students. Course list, income limit, category and domicile rules, documents, deadline and benefits are not confirmed by this page.',
     applicationStatus: 'unknown',
     deadline: null,
     requiredDocuments: null,
@@ -22,7 +23,7 @@ var THUNAI_SCHEMES = [
     rules: [
       { id: 'tn-bc-category', field: 'category', operator: 'in', value: ['BC', 'MBC', 'DNC'], required: true, label: 'Belongs to BC, MBC or DNC community (category not collected in profile)' },
       { id: 'tn-bc-domicile', field: 'tnDomicile', operator: 'equals', value: 'yes', required: true, label: 'Native of Tamil Nadu (not collected in profile)' },
-      { id: 'tn-bc-income', field: 'incomeRange', operator: 'in', value: ['Below ₹1 lakh', '₹1–2.5 lakh'], required: true, label: 'Annual parental income does not exceed ₹2,50,000' },
+      { id: 'tn-bc-income', field: 'incomeRange', operator: 'in', value: ['Below ₹1 lakh', '₹1–2.5 lakh'], required: true, label: 'Annual family income does not exceed ₹2,50,000' },
       { id: 'tn-bc-course', field: 'eligibleCourseListed', operator: 'equals', value: 'yes', required: true, label: 'Course is one of the listed courses: ITI, Polytechnic Diploma, Postgraduate, Professional or PhD (course type not collected in profile)' }
     ],
     notes: 'Documents not individually specified in the source. Deadline not published in the source. Listed courses are described as include, so course eligibility is not auto-matched. Do not map educationLevel values to courses.'
@@ -33,10 +34,11 @@ var THUNAI_SCHEMES = [
     isDemo: false,
     description: 'Scholarship for BC, MBC or DNC students from Tamil Nadu pursuing UG or PG at an IIT, IIM, IIIT, NIT or Central University.',
     department: 'Tamil Nadu Backward Classes Welfare Department',
-    officialUrl: 'https://bcmbcmw.tn.gov.in/welfschemes.htm',
+    officialUrl: 'https://coimbatore.nic.in/educational-scholarship-for-bc-mbc-dnc-students-in-central-educational-institutions-2026-27/',
     applicationPortalUrl: null,
-    lastVerified: '2026-11-21',
-    verificationStatus: 'source-checked',
+    lastVerified: '2026-11-22',
+    verificationStatus: 'partially-verified',
+    verificationNotes: 'Partially verified on 2026-11-22 against a Tamil Nadu government (Coimbatore district) notice, published 18/09/2026, for the 2026-27 scheme titled Educational Scholarship for BC, MBC/DNC Students in Central Educational Institutions. It states fresh and renewal applications are invited for 2026-27 with no closing date. Eligibility rules, institution list, income limit and documents are not confirmed by this notice. The scheme name in this record differs from the notice title (Central Government Institutions vs Central Educational Institutions); the name is unchanged pending review.',
     applicationStatus: 'unknown',
     deadline: null,
     requiredDocuments: null,
@@ -47,11 +49,12 @@ var THUNAI_SCHEMES = [
     rules: [
       { id: 'tnc-category', field: 'category', operator: 'in', value: ['BC', 'MBC', 'DNC'], required: true, label: 'Belongs to BC, MBC or DNC (category not collected in profile)' },
       { id: 'tnc-domicile', field: 'tnDomicile', operator: 'equals', value: 'yes', required: true, label: 'Native of Tamil Nadu (not collected in profile)' },
-      { id: 'tnc-education', field: 'educationLevel', operator: 'in', value: ['Undergraduate', 'Postgraduate'], required: true, label: 'Pursuing UG or PG' },
-      { id: 'tnc-institution', field: 'institutionType', operator: 'in', value: ['IIT', 'IIM', 'IIIT', 'NIT', 'Central University'], required: true, label: 'Studying at an IIT, IIM, IIIT, NIT or Central University (institution not collected in profile)' },
+      { id: 'tnc-education', field: 'educationLevel', operator: 'in', value: ['Undergraduate', 'Postgraduate'], required: true, unknownValues: ['Other'], label: 'Pursuing UG or PG' },
+      { id: 'tnc-institution', field: 'institution', operator: 'in', value: ['IIT', 'IIM', 'IIIT', 'NIT', 'Central University'], required: true, unknownValues: ['Other'], label: 'Studying at an IIT, IIM, IIIT, NIT or Central University (institution not collected in profile)' },
       { id: 'tnc-income', field: 'incomeRange', operator: 'in', value: ['Below ₹1 lakh', '₹1–2.5 lakh'], required: true, label: 'Annual family income does not exceed ₹2,50,000' }
     ],
-    notes: 'If applications exceed available places, selection is based on Class XII marks (classXiiMarks not collected). Documents unknown. Deadline not published in the source.'
+    notes: 'If applications exceed available places, selection is based on Class XII marks (classXiiMarks not collected). Documents unknown. Deadline not published in the source.',
+    selectionNote: 'If applications exceed available places, selection is based on Class XII marks.'
   },
   {
     id: 'pm-usp-central-sector',
@@ -61,18 +64,19 @@ var THUNAI_SCHEMES = [
     department: 'Ministry of Education, Department of Higher Education, Government of India',
     officialUrl: 'https://www.education.gov.in/sites/upload_files/mhrd/files/upload_document/FAQs_PM_USP2526.pdf',
     applicationPortalUrl: 'https://scholarships.gov.in/',
-    lastVerified: '2026-11-21',
-    verificationStatus: 'source-checked',
+    lastVerified: null,
+    verificationStatus: 'unverified',
+    verificationNotes: 'Unverified. A CSSS 2026-27 announcement at https://scholarships.gov.in/ViewMoreAnnouncement was provided for review but could not be retrieved (request timed out), so its scope relative to PM-USP is not confirmed. The official FAQ PDF cited above is for 2025-26 and could not be retrieved (404). Eligibility rules, benefits, documents and deadline are not confirmed.',
     applicationStatus: 'unknown',
     deadline: null,
     requiredDocuments: null,
     applicationSteps: null,
     rules: [
-      { id: 'pmusp-percentile', field: 'classXiiPercentile', operator: 'minNumber', value: 80, required: true, label: 'Above the 80th percentile of successful Class XII candidates in the relevant board and stream (not collected in profile)' },
+      { id: 'pmusp-percentile', field: 'classXiiPercentileRank', operator: 'greaterThan', value: 80, required: true, label: 'Above the 80th percentile rank of successful Class XII candidates in the relevant board and stream (percentile rank, not marks percentage)' },
       { id: 'pmusp-regular', field: 'regularCourse', operator: 'equals', value: 'yes', required: true, label: 'Regular course, not correspondence or distance (not collected in profile)' },
-      { id: 'pmusp-income', field: 'annualFamilyIncome', operator: 'maxNumber', value: 450000, required: true, label: 'Annual family income does not exceed ₹4,50,000 (exact income not collected; income bands cannot confirm this limit)' },
+      { id: 'pmusp-income', field: 'annualFamilyIncome', operator: 'maxNumber', value: 450000, required: true, label: 'Annual family income does not exceed ₹4,50,000 (numeric annual family income is collected in the profile; leave blank if not known)' },
       { id: 'pmusp-other-scholarship', field: 'otherScholarship', operator: 'equals', value: 'no', required: true, label: 'Not receiving another scholarship or fee reimbursement (not collected in profile)' },
-      { id: 'pmusp-diploma', field: 'educationLevel', operator: 'notEquals', value: 'Diploma', required: true, label: 'Not a diploma student (diploma students are not eligible)' },
+      { id: 'pmusp-diploma', field: 'educationLevel', operator: 'notEquals', value: 'Diploma', required: true, unknownValues: ['Other'], label: 'Not a diploma student (diploma students are not eligible)' },
       { id: 'pmusp-drop', field: 'droppedAfterXii', operator: 'equals', value: 'no', required: true, label: 'Did not take a drop after Class XII (not collected in profile)' }
     ],
     notes: 'Source is the 2025-26 FAQ; cycle-specific conditions and deadlines may change. Deadline null until a current official cycle notification is confirmed. Documents not inferred. The engine checks 80 or more for the percentile, so the strict above-80th boundary is not exact.'
@@ -85,8 +89,9 @@ var THUNAI_SCHEMES = [
     department: 'Ministry of Social Justice and Empowerment, Government of India',
     officialUrl: 'https://socialjustice.gov.in/social-audit/public/schemesdoc/PM_Yasasvi_scheme.pdf',
     applicationPortalUrl: 'https://scholarships.gov.in/',
-    lastVerified: '2026-11-21',
-    verificationStatus: 'source-checked',
+    lastVerified: null,
+    verificationStatus: 'unverified',
+    verificationNotes: 'Unverified. The page https://socialjustice.gov.in/schemes/101 was provided for review but returned HTTP 503 in this check, so it is not confirmed whether it matches this college scheme rather than the school scheme. The scheme PDF cited above could not be retrieved (request timed out). Eligibility rules, benefits, documents and deadline are not confirmed.',
     applicationStatus: 'unknown',
     deadline: null,
     requiredDocuments: null,
@@ -95,9 +100,10 @@ var THUNAI_SCHEMES = [
       { id: 'yasasvi-category', field: 'category', operator: 'in', value: ['OBC', 'EBC', 'DNT'], required: true, label: 'Belongs to OBC, EBC or DNT (category not collected in profile)' },
       { id: 'yasasvi-income', field: 'incomeRange', operator: 'in', value: ['Below ₹1 lakh', '₹1–2.5 lakh'], required: true, label: 'Total annual family income does not exceed ₹2,50,000' },
       { id: 'yasasvi-full-time', field: 'fullTimeCourse', operator: 'equals', value: 'yes', required: true, label: 'Full-time prescribed course (not collected in profile)' },
-      { id: 'yasasvi-institution', field: 'institutionType', operator: 'equals', value: 'notified', required: true, label: 'Institution notified by the Ministry (institution not collected in profile)' }
+      { id: 'yasasvi-institution', field: 'institutionListed', operator: 'equals', value: 'yes', required: true, unknownValues: ['notSure'], label: 'Institution notified by the Ministry (institution not collected in profile)' }
     ],
-    notes: 'Students must apply annually, including renewals. Official 2026-27 institution allocation listing: https://socialjustice.gov.in/index.php/schemes/110. Documents unknown. Deadline null until a current student application notification is confirmed. Scholarships are limited by institutional slots and selection criteria.'
+    notes: 'Students must apply annually, including renewals. Official 2026-27 institution allocation listing: https://socialjustice.gov.in/index.php/schemes/110. Documents unknown. Deadline null until a current student application notification is confirmed. Scholarships are limited by institutional slots and selection criteria.',
+    selectionNote: 'Scholarships are limited by institutional slots and selection criteria.'
   },
   {
     id: 'national-top-class-st',
@@ -107,20 +113,22 @@ var THUNAI_SCHEMES = [
     department: 'Ministry of Tribal Affairs, Government of India',
     officialUrl: 'https://tribal.nic.in/Scholarship.aspx',
     applicationPortalUrl: 'https://scholarships.gov.in/',
-    lastVerified: '2026-11-21',
-    verificationStatus: 'source-checked',
+    lastVerified: null,
+    verificationStatus: 'unverified',
+    verificationNotes: 'Unverified. The PIB press release https://www.pib.gov.in/PressReleasePage.aspx?PRID=2294705&lang=1&reg=6 (posted 05 AUG 2026, Ministry of Tribal Affairs) refers to the Post Matric Scholarship Scheme for ST students and does not confirm this Top Class scheme. Income limit, institution list, course rules, documents and deadline are not confirmed.',
     applicationStatus: 'unknown',
     deadline: null,
     requiredDocuments: null,
     applicationSteps: null,
     rules: [
       { id: 'nst-category', field: 'category', operator: 'equals', value: 'ST', required: true, label: 'Belongs to Scheduled Tribe (category not collected in profile)' },
-      { id: 'nst-income', field: 'annualFamilyIncome', operator: 'maxNumber', value: 600000, required: true, label: 'Annual family income from all sources does not exceed ₹6,00,000 (exact income not collected; income bands cannot confirm this limit)' },
+      { id: 'nst-income', field: 'annualFamilyIncome', operator: 'maxNumber', value: 600000, required: true, label: 'Annual family income from all sources does not exceed ₹6,00,000 (numeric annual family income is collected in the profile; leave blank if not known)' },
       { id: 'nst-course', field: 'coursePrescribed', operator: 'equals', value: 'yes', required: true, label: 'Prescribed course (not collected in profile)' },
-      { id: 'nst-institution', field: 'institutionType', operator: 'equals', value: 'identified', required: true, label: 'Institution identified by the Ministry (institution not collected in profile)' },
+      { id: 'nst-institution', field: 'institutionListed', operator: 'equals', value: 'yes', required: true, unknownValues: ['notSure'], label: 'Institution identified by the Ministry (institution not collected in profile)' },
       { id: 'nst-marks', field: 'classXiiMarks', operator: 'nonEmpty', value: null, required: true, label: 'Class XII marks available for merit selection (not collected in profile)' }
     ],
-    notes: 'Covers the duration of the course, subject to applicable conditions. Documents unknown. Deadline null until confirmed by a current official notification.'
+    notes: 'Covers the duration of the course, subject to applicable conditions. Documents unknown. Deadline null until confirmed by a current official notification.',
+    selectionNote: "Selection is on merit based on Class XII marks, subject to the scheme's own process."
   }
 ];
 

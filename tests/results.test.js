@@ -82,7 +82,7 @@ test('(c) Diploma educationLevel puts pm-usp-central-sector in Not Eligible with
   assert.ok(hit.item.failed.length > 0);
 });
 
-test('(d) null profile returns three groups without throwing; every item is non-demo and source-checked', () => {
+test('(d) null profile returns three groups without throwing; every item is non-demo with a verification status', () => {
   const view = viewFor(null);
   assert.deepStrictEqual(view.groups.map(group => group.label),
     [STATUS.LIKELY, STATUS.MORE_INFO, STATUS.NOT_ELIGIBLE]);
@@ -90,7 +90,8 @@ test('(d) null profile returns three groups without throwing; every item is non-
   assert.ok(items.length > 0, 'expected scheme items for a null profile');
   items.forEach(item => {
     assert.strictEqual(item.isDemo, false);
-    assert.strictEqual(item.verificationStatus, 'source-checked');
+    assert.ok(['verified', 'partially-verified', 'unverified'].indexOf(item.verificationStatus) !== -1, item.schemeId + ' verificationStatus');
+    assert.strictEqual(item.verificationStatus, schemes.find(s => s.id === item.schemeId).verificationStatus);
   });
 });
 
@@ -99,9 +100,11 @@ test('(d) full profile items carry source URL, last verified date and non-demo f
   assert.strictEqual(items.length, schemes.length);
   items.forEach(item => {
     assert.strictEqual(item.isDemo, false);
-    assert.strictEqual(item.verificationStatus, 'source-checked');
+    assert.ok(['verified', 'partially-verified', 'unverified'].indexOf(item.verificationStatus) !== -1, item.schemeId + ' verificationStatus');
+    assert.strictEqual(item.verificationStatus, schemes.find(s => s.id === item.schemeId).verificationStatus);
     assert.strictEqual(typeof item.officialUrl, 'string');
-    assert.strictEqual(item.lastVerified, '2026-11-21');
+    const record = schemes.find(s => s.id === item.schemeId);
+    assert.ok(record.lastVerified === null || /^\d{4}-\d{2}-\d{2}$/.test(record.lastVerified), item.schemeId + ' lastVerified');
   });
 });
 
@@ -117,6 +120,19 @@ test('explanations never contain a percent sign', () => {
       assert.ok(!item.explanation.includes('%'), 'explanation contains %: ' + item.explanation);
     });
   });
+});
+
+test('selectionNote: scheme with selectionNote carries it into the view item; scheme without it gets null', () => {
+  const view = viewFor(baseProfile());
+  const withNote = schemes.find(s => typeof s.selectionNote === 'string');
+  assert.ok(withNote, 'expected at least one scheme with selectionNote');
+  const hit = findItem(view, withNote.id);
+  assert.ok(hit, withNote.id + ' missing from view');
+  assert.strictEqual(hit.item.selectionNote, withNote.selectionNote);
+  const withoutNote = schemes.find(s => s.selectionNote === undefined);
+  assert.ok(withoutNote, 'expected at least one scheme without selectionNote');
+  const other = findItem(view, withoutNote.id);
+  assert.strictEqual(other.item.selectionNote, null);
 });
 
 let failed = 0;

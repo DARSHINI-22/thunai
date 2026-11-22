@@ -55,6 +55,9 @@
       case 'maxNumber':
         if (typeof expected !== 'number') { return 'missing'; }
         return typeof value === 'number' && value <= expected ? 'pass' : 'fail';
+      case 'greaterThan':
+        if (typeof expected !== 'number') { return 'missing'; }
+        return typeof value === 'number' && value > expected ? 'pass' : 'fail';
       case 'nonEmpty': return 'pass';
       default: return 'missing';
     }
@@ -103,7 +106,9 @@
       var r = isObject(rule) ? rule : {};
       var label = r.label || r.field || r.id || 'Unnamed criterion';
       var value = fieldValue(profile, r.field);
-      var outcome = value === undefined ? 'missing' : testRule(value, r);
+      // Optional per-rule unknownValues: a listed answer (e.g. 'Other') is treated as unknown.
+      var isUnknown = Array.isArray(r.unknownValues) && value !== undefined && r.unknownValues.indexOf(value) !== -1;
+      var outcome = value === undefined || isUnknown ? 'missing' : testRule(value, r);
       if (outcome === 'pass') {
         result.matchedCriteria.push(label);
       } else if (outcome === 'fail') {

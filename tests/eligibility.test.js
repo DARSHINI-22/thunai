@@ -49,8 +49,7 @@ test('(1) dataset has exactly five real records with source fields', () => {
   schemes.forEach((s) => {
     assert.strictEqual(s.isDemo, false, s.id + ' isDemo');
     assert.strictEqual(typeof s.officialUrl, 'string', s.id + ' officialUrl');
-    assert.strictEqual(s.lastVerified, '2026-11-21', s.id + ' lastVerified');
-    assert.strictEqual(s.verificationStatus, 'source-checked', s.id + ' verificationStatus');
+    assert.ok(['verified', 'partially-verified', 'unverified'].indexOf(s.verificationStatus) !== -1, s.id + ' verificationStatus');
     assert.strictEqual(s.applicationStatus, 'unknown', s.id + ' applicationStatus');
     assert.strictEqual(s.deadline, null, s.id + ' deadline');
     assert.strictEqual(s.requiredDocuments, null, s.id + ' requiredDocuments');
@@ -80,7 +79,7 @@ test('(4) incomeRange above the limit: tn-bc-mbc-dnc-post-matric is Not Eligible
   const profile = Object.assign({}, sampleProfile, { incomeRange: '₹5–8 lakh' });
   const r = evaluateScheme(profile, byId('tn-bc-mbc-dnc-post-matric'));
   assert.strictEqual(r.status, STATUS.NOT_ELIGIBLE);
-  assert.ok(r.failedCriteria.includes('Annual parental income does not exceed ₹2,50,000'));
+  assert.ok(r.failedCriteria.includes('Annual family income does not exceed ₹2,50,000'));
 });
 
 test('(5) null, empty and corrupt storage never throw and stay More Information Required', () => {
@@ -115,6 +114,64 @@ test('(7) explanations have no percent sign; guarantee only inside does not guar
     }
   }
 });
+
+// Milestone 6B: profile and eligibility criteria added with the profile model.
+const ruleOf = (schemeId, ruleId) => byId(schemeId).rules.find((r) => r.id === ruleId);
+
+test('(8) PM-USP percentile: 80 fails, 81 and 80.5 match', () => {
+  const label = ruleOf('pm-usp-central-sector', 'pmusp-percentile').label;
+  const at80 = evaluateScheme({ ...sampleProfile, classXiiPercentileRank: 80 }, byId('pm-usp-central-sector'));
+  assert.ok(at80.failedCriteria.includes(label), '80 should fail the percentile criterion');
+  assert.ok(!at80.matchedCriteria.includes(label), '80 must not be matched');
+  const at81 = evaluateScheme({ ...sampleProfile, classXiiPercentileRank: 81 }, byId('pm-usp-central-sector'));
+  assert.ok(at81.matchedCriteria.includes(label), '81 should match');
+  const at80point5 = evaluateScheme({ ...sampleProfile, classXiiPercentileRank: 80.5 }, byId('pm-usp-central-sector'));
+  assert.ok(at80point5.matchedCriteria.includes(label), '80.5 should match');
+});
+
+test('(9) educationLevel Other is unknown, not matched or failed, for tnc-education and pmusp-diploma', () => {
+  const other = { ...sampleProfile, educationLevel: 'Other' };
+  const cases = [
+    ['tn-bc-mbc-dnc-central-institutions', 'tnc-education'],
+    ['pm-usp-central-sector', 'pmusp-diploma']
+  ];
+  cases.forEach(([schemeId, ruleId]) => {
+    const rule = ruleOf(schemeId, ruleId);
+    const result = evaluateScheme(other, byId(schemeId));
+    assert.ok(result.missingInformation.includes(rule.field), ruleId + ' should be missing information');
+    assert.ok(!result.matchedCriteria.includes(rule.label), ruleId + ' must not be matched');
+    assert.ok(!result.failedCriteria.includes(rule.label), ruleId + ' must not be failed');
+  });
+});
+
+test('(10) institutionListed notSure is unknown, not matched or failed, for yasasvi and national ST', () => {
+  const notSure = { ...sampleProfile, institutionListed: 'notSure' };
+  const cases = [
+    ['pm-yasasvi-top-class-college', 'yasasvi-institution'],
+    ['national-top-class-st', 'nst-institution']
+  ];
+  cases.forEach(([schemeId, ruleId]) => {
+    const rule = ruleOf(schemeId, ruleId);
+    const result = evaluateScheme(notSure, byId(schemeId));
+    assert.ok(result.missingInformation.includes(rule.field), ruleId + ' should be missing information');
+    assert.ok(!result.matchedCriteria.includes(rule.label), ruleId + ' must not be matched');
+    assert.ok(!result.failedCriteria.includes(rule.label), ruleId + ' must not be failed');
+  });
+});
+
+test('(11) numeric income: PM-USP 450000 matches, 450001 fails; NST 600000 matches', () => {
+  const usp = byId('pm-usp-central-sector');
+  const uspIncome = ruleOf('pm-usp-central-sector', 'pmusp-income').label;
+  const atLimit = evaluateScheme({ ...sampleProfile, annualFamilyIncome: 450000 }, usp);
+  assert.ok(atLimit.matchedCriteria.includes(uspIncome), '450000 should match PM-USP income');
+  const overLimit = evaluateScheme({ ...sampleProfile, annualFamilyIncome: 450001 }, usp);
+  assert.ok(overLimit.failedCriteria.includes(uspIncome), '450001 should fail PM-USP income');
+  const nst = byId('national-top-class-st');
+  const nstIncome = ruleOf('national-top-class-st', 'nst-income').label;
+  const nstResult = evaluateScheme({ ...sampleProfile, annualFamilyIncome: 600000 }, nst);
+  assert.ok(nstResult.matchedCriteria.includes(nstIncome), '600000 should match NST income');
+});
+
 
 if (failures === 0) {
   console.log('All eligibility tests passed.');

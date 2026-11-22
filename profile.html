@@ -7,6 +7,7 @@
   <meta name="description" content="Create your THUNAI student profile. Your details are saved only on this device.">
   <link rel="stylesheet" href="css/styles.css">
   <script src="js/main.js" defer></script>
+  <script src="js/profile-model.js" defer></script>
   <script src="js/profile.js" defer></script>
 </head>
 <body id="top">
@@ -176,6 +177,86 @@
                 </div>
                 <p class="field-error" id="first-generation-error" aria-live="polite"></p>
               </fieldset>
+
+              <div class="form-field">
+                <label for="category">Category <span class="optional-mark">(optional)</span></label>
+                <select id="category" name="category">
+                  <option value="">Select category</option>
+                  <option value="BC">BC</option>
+                  <option value="MBC">MBC</option>
+                  <option value="DNC">DNC</option>
+                  <option value="OBC">OBC</option>
+                  <option value="EBC">EBC</option>
+                  <option value="DNT">DNT</option>
+                  <option value="ST">ST</option>
+                  <option value="Other">Other</option>
+                </select>
+                <p class="field-error" id="category-error" aria-live="polite"></p>
+              </div>
+
+              <fieldset class="form-field form-field-full">
+                <legend>Tamil Nadu domicile <span class="optional-mark">(optional)</span></legend>
+                <div class="radio-options">
+                  <label class="radio-option" for="tn-domicile-yes">
+                    <input type="radio" id="tn-domicile-yes" name="tn-domicile" value="yes">
+                    <span>Yes</span>
+                  </label>
+                  <label class="radio-option" for="tn-domicile-no">
+                    <input type="radio" id="tn-domicile-no" name="tn-domicile" value="no">
+                    <span>No</span>
+                  </label>
+                  <label class="radio-option" for="tn-domicile-not-sure">
+                    <input type="radio" id="tn-domicile-not-sure" name="tn-domicile" value="notSure">
+                    <span>Not sure</span>
+                  </label>
+                </div>
+                <p class="field-error" id="tn-domicile-error" aria-live="polite"></p>
+              </fieldset>
+
+              <div class="form-field">
+                <label for="institution">Institution <span class="optional-mark">(optional)</span></label>
+                <select id="institution" name="institution">
+                  <option value="">Select institution</option>
+                  <option value="IIT">IIT</option>
+                  <option value="IIM">IIM</option>
+                  <option value="IIIT">IIIT</option>
+                  <option value="NIT">NIT</option>
+                  <option value="Central University">Central University</option>
+                  <option value="Other">Other</option>
+                </select>
+                <p class="field-error" id="institution-error" aria-live="polite"></p>
+              </div>
+
+              <fieldset class="form-field form-field-full">
+                <legend>Institution listed by the Ministry <span class="optional-mark">(optional)</span></legend>
+                <div class="radio-options">
+                  <label class="radio-option" for="institution-listed-yes">
+                    <input type="radio" id="institution-listed-yes" name="institution-listed" value="yes">
+                    <span>Yes</span>
+                  </label>
+                  <label class="radio-option" for="institution-listed-no">
+                    <input type="radio" id="institution-listed-no" name="institution-listed" value="no">
+                    <span>No</span>
+                  </label>
+                  <label class="radio-option" for="institution-listed-not-sure">
+                    <input type="radio" id="institution-listed-not-sure" name="institution-listed" value="notSure">
+                    <span>Not sure</span>
+                  </label>
+                </div>
+                <p class="field-error" id="institution-listed-error" aria-live="polite"></p>
+              </fieldset>
+
+              <div class="form-field">
+                <label for="annual-family-income">Annual family income (₹, optional)</label>
+                <input type="number" id="annual-family-income" name="annual-family-income" min="0" step="1" inputmode="numeric">
+                <p class="field-error" id="annual-family-income-error" aria-live="polite"></p>
+              </div>
+
+              <div class="form-field">
+                <label for="class-xii-percentile-rank">Class XII percentile rank (optional, PM-USP only; not your marks percentage)</label>
+                <input type="number" id="class-xii-percentile-rank" name="class-xii-percentile-rank" min="0" max="100" step="0.01" inputmode="decimal">
+                <p class="field-error" id="class-xii-percentile-rank-error" aria-live="polite"></p>
+              </div>
             </div>
 
             <div class="form-actions">
@@ -206,6 +287,18 @@
               <dd id="summary-income-range"></dd>
               <dt>First-generation graduate</dt>
               <dd id="summary-first-generation"></dd>
+              <dt>Category</dt>
+              <dd id="summary-category"></dd>
+              <dt>Tamil Nadu domicile</dt>
+              <dd id="summary-tn-domicile"></dd>
+              <dt>Institution</dt>
+              <dd id="summary-institution"></dd>
+              <dt>Institution listed by the Ministry</dt>
+              <dd id="summary-institution-listed"></dd>
+              <dt>Exact annual family income (₹)</dt>
+              <dd id="summary-annual-income"></dd>
+              <dt>Class XII percentile rank (not marks)</dt>
+              <dd id="summary-class-xii-percentile-rank"></dd>
             </dl>
             <p><a class="btn" href="results.html">View eligibility results</a></p>
           </section>

@@ -3,37 +3,50 @@
 
   var STORAGE_KEY = 'thunai.studentProfile';
   var STORAGE_ERROR = 'Your profile cannot be saved on this browser.';
+  var YES_NO_LABELS = { yes: 'Yes', no: 'No', notSure: 'Not sure' };
 
   var form = document.getElementById('profile-form');
   if (!form) {
     return;
   }
 
+  // Validation, normalising and profile building live in profile-model.js.
+  var model = window.THUNAI_PROFILE_MODEL;
   var statusEl = document.getElementById('form-status');
   var summaryEl = document.getElementById('saved-summary');
   var clearButton = document.getElementById('clear-profile');
 
-  // Field order matches the form. Each entry maps a profile key to its
-  // control ids, error paragraph id, summary dd id and validation message.
+  // Field order matches the form. Each entry maps a profile key to its control
+  // ids, error paragraph id and summary dd id. Radio groups set radioName.
   var FIELDS = [
     { key: 'name', ids: ['name'], errorId: 'name-error', summaryId: 'summary-name' },
-    { key: 'age', ids: ['age'], errorId: 'age-error', summaryId: 'summary-age',
-      message: 'Enter your age between 14 and 60.' },
-    { key: 'district', ids: ['district'], errorId: 'district-error', summaryId: 'summary-district',
-      message: 'Select your district.' },
+    { key: 'age', ids: ['age'], errorId: 'age-error', summaryId: 'summary-age' },
+    { key: 'district', ids: ['district'], errorId: 'district-error', summaryId: 'summary-district' },
     { key: 'educationLevel', ids: ['education-level'], errorId: 'education-level-error',
-      summaryId: 'summary-education-level', message: 'Select your education level.' },
-    { key: 'course', ids: ['course'], errorId: 'course-error', summaryId: 'summary-course',
-      message: 'Enter your course.' },
+      summaryId: 'summary-education-level' },
+    { key: 'course', ids: ['course'], errorId: 'course-error', summaryId: 'summary-course' },
     { key: 'collegeType', ids: ['college-type'], errorId: 'college-type-error',
-      summaryId: 'summary-college-type', message: 'Select your college type.' },
+      summaryId: 'summary-college-type' },
     { key: 'academicYear', ids: ['academic-year'], errorId: 'academic-year-error',
-      summaryId: 'summary-academic-year', message: 'Select your academic year.' },
+      summaryId: 'summary-academic-year' },
     { key: 'incomeRange', ids: ['income-range'], errorId: 'income-range-error',
-      summaryId: 'summary-income-range', message: 'Select your annual family income range.' },
-    { key: 'firstGeneration', ids: ['first-generation-yes', 'first-generation-no'],
-      errorId: 'first-generation-error', summaryId: 'summary-first-generation',
-      message: 'Select whether you are a first-generation graduate.' }
+      summaryId: 'summary-income-range' },
+    { key: 'firstGeneration', radioName: 'first-generation',
+      ids: ['first-generation-yes', 'first-generation-no'],
+      errorId: 'first-generation-error', summaryId: 'summary-first-generation' },
+    { key: 'category', ids: ['category'], errorId: 'category-error', summaryId: 'summary-category' },
+    { key: 'tnDomicile', radioName: 'tn-domicile',
+      ids: ['tn-domicile-yes', 'tn-domicile-no', 'tn-domicile-not-sure'],
+      errorId: 'tn-domicile-error', summaryId: 'summary-tn-domicile' },
+    { key: 'institution', ids: ['institution'], errorId: 'institution-error',
+      summaryId: 'summary-institution' },
+    { key: 'institutionListed', radioName: 'institution-listed',
+      ids: ['institution-listed-yes', 'institution-listed-no', 'institution-listed-not-sure'],
+      errorId: 'institution-listed-error', summaryId: 'summary-institution-listed' },
+    { key: 'annualFamilyIncome', ids: ['annual-family-income'],
+      errorId: 'annual-family-income-error', summaryId: 'summary-annual-income' },
+    { key: 'classXiiPercentileRank', ids: ['class-xii-percentile-rank'],
+      errorId: 'class-xii-percentile-rank-error', summaryId: 'summary-class-xii-percentile-rank' }
   ];
 
   function getElement(id) {
@@ -53,12 +66,17 @@
   function readValues() {
     var values = {};
     FIELDS.forEach(function (spec) {
-      if (spec.key === 'firstGeneration') {
-        var checked = form.querySelector('input[name="first-generation"]:checked');
-        values.firstGeneration = checked ? checked.value : '';
-      } else {
-        var el = getElement(spec.ids[0]);
-        values[spec.key] = el ? el.value : '';
+      if (spec.radioName) {
+        var checked = form.querySelector('input[name="' + spec.radioName + '"]:checked');
+        values[spec.key] = checked ? checked.value : '';
+        return;
+      }
+      var el = getElement(spec.ids[0]);
+      values[spec.key] = el ? el.value : '';
+      // Browsers report an empty value for typed text that is not a number;
+      // flag it so the model rejects it instead of treating it as absent.
+      if (el && el.validity && el.validity.badInput) {
+        values[spec.key] = 'not a number';
       }
     });
     return values;
@@ -67,53 +85,17 @@
   function writeValues(values) {
     FIELDS.forEach(function (spec) {
       var value = values[spec.key] === undefined ? '' : String(values[spec.key]);
-      if (spec.key === 'firstGeneration') {
+      if (spec.radioName) {
         getControls(spec).forEach(function (radio) {
           radio.checked = radio.value === value;
         });
-      } else {
-        var el = getElement(spec.ids[0]);
-        if (el) {
-          el.value = value;
-        }
+        return;
+      }
+      var el = getElement(spec.ids[0]);
+      if (el) {
+        el.value = value;
       }
     });
-  }
-
-  // Returns an object keyed by profile key; only invalid fields are present.
-  function validate(values) {
-    var errors = {};
-    var age = String(values.age).trim();
-    var ageNumber = Number(age);
-
-    if (!/^\d+$/.test(age) || ageNumber < 14 || ageNumber > 60) {
-      errors.age = true;
-    }
-    if (!values.district) {
-      errors.district = true;
-    }
-    if (!values.educationLevel) {
-      errors.educationLevel = true;
-    }
-    if (!String(values.course).trim()) {
-      errors.course = true;
-    }
-    if (!values.collegeType) {
-      errors.collegeType = true;
-    }
-    if (!values.academicYear) {
-      errors.academicYear = true;
-    }
-    if (!values.incomeRange) {
-      errors.incomeRange = true;
-    }
-    if (values.firstGeneration !== 'yes' && values.firstGeneration !== 'no') {
-      errors.firstGeneration = true;
-    }
-    if (String(values.name).trim().length > 100) {
-      errors.name = 'Name must be 100 characters or fewer.';
-    }
-    return errors;
   }
 
   function showError(spec, message) {
@@ -142,22 +124,32 @@
     FIELDS.forEach(clearError);
   }
 
+  // Text shown in the summary for one profile value.
+  function displayText(key, value) {
+    if (key === 'firstGeneration') {
+      return value === 'yes' ? 'Yes' : 'No';
+    }
+    if (!value) {
+      return model.OPTIONAL_KEYS.indexOf(key) !== -1 ? 'Not provided' : String(value);
+    }
+    if (key === 'tnDomicile' || key === 'institutionListed') {
+      return YES_NO_LABELS[value];
+    }
+    if (key === 'annualFamilyIncome') {
+      return '\u20B9' + value;
+    }
+    if (key === 'classXiiPercentileRank') {
+      return value + ' (percentile rank)';
+    }
+    return String(value);
+  }
+
   function showSummary(values) {
     FIELDS.forEach(function (spec) {
       var dd = getElement(spec.summaryId);
-      if (!dd) {
-        return;
+      if (dd) {
+        dd.textContent = displayText(spec.key, values[spec.key]);
       }
-      var value = values[spec.key];
-      var text;
-      if (spec.key === 'name') {
-        text = value ? value : 'Not provided';
-      } else if (spec.key === 'firstGeneration') {
-        text = value === 'yes' ? 'Yes' : 'No';
-      } else {
-        text = String(value);
-      }
-      dd.textContent = text;
     });
     if (summaryEl) {
       summaryEl.hidden = false;
@@ -197,27 +189,6 @@
     }
   }
 
-  // Converts a parsed stored object into the same string-based shape as the form.
-  function normalizeSaved(data) {
-    if (!data || typeof data !== 'object') {
-      return null;
-    }
-    function text(value) {
-      return typeof value === 'string' ? value : '';
-    }
-    return {
-      name: text(data.name),
-      age: typeof data.age === 'number' || typeof data.age === 'string' ? String(data.age) : '',
-      district: text(data.district),
-      educationLevel: text(data.educationLevel),
-      course: text(data.course),
-      collegeType: text(data.collegeType),
-      academicYear: text(data.academicYear),
-      incomeRange: text(data.incomeRange),
-      firstGeneration: text(data.firstGeneration)
-    };
-  }
-
   function loadSavedProfile() {
     var stored = storageRead();
     if (!stored.ok) {
@@ -230,13 +201,13 @@
 
     var values = null;
     try {
-      values = normalizeSaved(JSON.parse(stored.raw));
+      values = model.normalizeSaved(JSON.parse(stored.raw));
     } catch (error) {
       values = null;
     }
 
-    if (!values || Object.keys(validate(values)).length > 0) {
-      // Corrupt or incomplete data: discard it and start with an empty form.
+    if (!values || Object.keys(model.validate(values)).length > 0) {
+      // Corrupt or incomplete required data: discard it and start with an empty form.
       storageRemove();
       return;
     }
@@ -251,16 +222,12 @@
     setStatus('');
 
     var values = readValues();
-    values.name = values.name.trim();
-    values.course = values.course.trim();
-
-    var errors = validate(values);
+    var errors = model.validate(values);
     var firstInvalid = null;
 
     FIELDS.forEach(function (spec) {
-      var message = errors[spec.key];
-      if (message) {
-        showError(spec, message === true ? spec.message : message);
+      if (errors[spec.key]) {
+        showError(spec, errors[spec.key]);
         if (!firstInvalid) {
           firstInvalid = getControls(spec)[0] || null;
         }
@@ -273,27 +240,15 @@
       return;
     }
 
-    var profile = {
-      name: values.name,
-      age: parseInt(values.age, 10),
-      district: values.district,
-      educationLevel: values.educationLevel,
-      course: values.course,
-      collegeType: values.collegeType,
-      academicYear: values.academicYear,
-      incomeRange: values.incomeRange,
-      firstGeneration: values.firstGeneration,
-      savedAt: new Date().toISOString()
-    };
+    var profile = model.buildProfile(values, new Date().toISOString());
 
     if (!storageWrite(JSON.stringify(profile))) {
       setStatus(STORAGE_ERROR);
       return;
     }
 
-    values.age = String(profile.age);
     setStatus('Profile saved on this device.');
-    showSummary(values);
+    showSummary(model.normalizeSaved(profile));
   }
 
   function handleFieldChange(event) {

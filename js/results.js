@@ -55,11 +55,13 @@
       description: text(s.description),
       department: text(s.department),
       verificationStatus: text(s.verificationStatus) || 'Not available',
+      verificationNotes: text(s.verificationNotes) || 'Not available',
       isDemo: result.isDemo === true || s.isDemo === true,
       lastVerified: text(s.lastVerified) || 'Not available',
       deadline: typeof s.deadline === 'string' && s.deadline.trim() ? s.deadline.trim() : null,
       officialUrl: text(s.officialUrl) || null,
       requiredDocuments: textList(s.requiredDocuments),
+      selectionNote: text(s.selectionNote) || null,
       matched: textList(result.matchedCriteria),
       failed: textList(result.failedCriteria),
       missing: textList(result.missingInformation),
@@ -150,6 +152,7 @@
     article.appendChild(el('p', 'scheme-meta', 'Department: ' + (item.department || 'Not available')));
     article.appendChild(el('p', 'scheme-meta', 'Verification status: ' + item.verificationStatus));
     article.appendChild(el('p', 'scheme-meta', 'Last verified: ' + item.lastVerified));
+    article.appendChild(el('p', 'scheme-meta', 'Verification notes: ' + item.verificationNotes));
     article.appendChild(el('p', 'scheme-meta', 'Deadline: ' + (item.deadline === null || item.deadline === undefined ? 'Not published in the source' : item.deadline)));
     article.appendChild(sourceParagraph(item.officialUrl));
     if (Array.isArray(item.requiredDocuments)) {
@@ -165,6 +168,13 @@
     article.appendChild(listBlock('Missing information', item.missing));
     article.appendChild(el('p', 'scheme-explanation', item.explanation));
     article.appendChild(el('p', 'scheme-note', 'This is not a guarantee of approval.'));
+    if (item.selectionNote !== null && item.selectionNote !== undefined) {
+      var selectionWrap = el('div', 'criteria-block');
+      selectionWrap.appendChild(el('h4', null, 'Final scholarship selection'));
+      selectionWrap.appendChild(el('p', 'scheme-meta', item.selectionNote));
+      selectionWrap.appendChild(el('p', 'scheme-note', 'Meeting these criteria does not guarantee an award.'));
+      article.appendChild(selectionWrap);
+    }
     return article;
   }
 
