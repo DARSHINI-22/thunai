@@ -172,6 +172,54 @@ test('(11) numeric income: PM-USP 450000 matches, 450001 fails; NST 600000 match
   assert.ok(nstResult.matchedCriteria.includes(nstIncome), '600000 should match NST income');
 });
 
+// Profile fields added with the seven new questions (regularCourse, otherScholarship, etc.).
+const TN_BC = 'tn-bc-mbc-dnc-post-matric';
+const PM_USP = 'pm-usp-central-sector';
+const NST = 'national-top-class-st';
+const YASASVI = 'pm-yasasvi-top-class-college';
+const uspBase = { ...sampleProfile, classXiiPercentileRank: 85, annualFamilyIncome: 300000, regularCourse: 'yes', otherScholarship: 'no', droppedAfterXii: 'no' };
+
+test('(12) BC, tnDomicile notSure, eligible course yes: More Information Required with no failures', () => {
+  const r = evaluateScheme({ ...sampleProfile, category: 'BC', tnDomicile: 'notSure', eligibleCourseListed: 'yes' }, byId(TN_BC));
+  assert.strictEqual(r.status, STATUS.MORE_INFO);
+  assert.deepStrictEqual(r.failedCriteria, []);
+});
+
+test('(13) BC, tnDomicile yes, eligible course yes: Likely Eligible', () => {
+  const r = evaluateScheme({ ...sampleProfile, category: 'BC', tnDomicile: 'yes', eligibleCourseListed: 'yes' }, byId(TN_BC));
+  assert.strictEqual(r.status, STATUS.LIKELY);
+});
+
+test('(14) BC, tnDomicile yes, eligible course no: Not Eligible', () => {
+  const r = evaluateScheme({ ...sampleProfile, category: 'BC', tnDomicile: 'yes', eligibleCourseListed: 'no' }, byId(TN_BC));
+  assert.strictEqual(r.status, STATUS.NOT_ELIGIBLE);
+});
+
+test('(15) PM-USP: percentile 85, income 300000, regular yes, other scholarship no, no drop: Likely Eligible', () => {
+  const r = evaluateScheme(uspBase, byId(PM_USP));
+  assert.strictEqual(r.status, STATUS.LIKELY);
+});
+
+test('(16) PM-USP: other scholarship yes: Not Eligible', () => {
+  const r = evaluateScheme({ ...uspBase, otherScholarship: 'yes' }, byId(PM_USP));
+  assert.strictEqual(r.status, STATUS.NOT_ELIGIBLE);
+});
+
+test('(17) PM-USP: other scholarship notSure: More Information Required', () => {
+  const r = evaluateScheme({ ...uspBase, otherScholarship: 'notSure' }, byId(PM_USP));
+  assert.strictEqual(r.status, STATUS.MORE_INFO);
+});
+
+test('(18) NST: ST, income 500000, prescribed course yes, institution listed yes, marks 75: Likely Eligible', () => {
+  const profile = { ...sampleProfile, category: 'ST', annualFamilyIncome: 500000, coursePrescribed: 'yes', institutionListed: 'yes', classXiiMarks: 75 };
+  assert.strictEqual(evaluateScheme(profile, byId(NST)).status, STATUS.LIKELY);
+});
+
+test('(19) YASASVI: OBC, full-time notSure, institution listed yes: More Information Required', () => {
+  const profile = { ...sampleProfile, category: 'OBC', fullTimeCourse: 'notSure', institutionListed: 'yes' };
+  assert.strictEqual(evaluateScheme(profile, byId(YASASVI)).status, STATUS.MORE_INFO);
+});
+
 
 if (failures === 0) {
   console.log('All eligibility tests passed.');

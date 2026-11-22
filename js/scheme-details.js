@@ -71,7 +71,7 @@
     return '';
   }
 
-  function fillVerification(box, view) {
+  function fillVerification(view, box) {
     box.textContent = '';
     box.appendChild(el('p', 'verification-badge' + badgeClass(view.verificationStatus), view.verificationLabel || NOT_CONFIRMED));
     box.appendChild(el('p', 'details-label', 'Verification notes'));
@@ -95,7 +95,7 @@
     box.appendChild(p);
   }
 
-  function fillOverview(box, view) {
+  function fillOverview(view, box) {
     box.textContent = '';
     box.appendChild(el('p', 'details-label', 'Description'));
     box.appendChild(valueNode(view.description));

@@ -254,3 +254,35 @@ Core pages and scripts present. Profile, eligibility and results logic updated t
 
 ## Next Developer
 Darshini
+
+
+## Final QA audit
+- Branch: audit/final-qa (created from main; no commits).
+- Node tests run this session, all exit 0: tests/application-guidance.test.js, application-tracker.test.js, comparison-ui.test.js, comparison.test.js, dashboard.test.js, document-checklist.test.js, eligibility.test.js, profile-model.test.js, results.test.js, saved-scholarships.test.js, scheme-details.test.js, verification.test.js.
+- Test counts: roughly 346 PASS lines were counted per the tester. For seven files the output was truncated, so counts came from summary lines.
+- Syntax: node --check passed for all 21 files in js/.
+- HTML references: every script and stylesheet referenced by index.html, profile.html and results.html exists.
+- Storage: direct localStorage reads in application-tracker.js, comparison-ui.js, document-checklist.js, saved-scholarships.js and profile.js are inside try/catch.
+- NOT CONFIRMED:
+  - The try around js/dashboard.js line 88.
+  - How callers handle an invalid stored profile (js/profile.js about lines 203-212; tracked as Milestone 7 in TASKS.md).
+  - Empty-state rendering for corrupt "{bad" storage.
+- Bugs: no confirmed critical bug reproduced. No code changed in this audit.
+- NOT RUN in a browser: browser journey (landing, profile save, results, scheme details, documents, guidance, save/remove, tracker, comparison, dashboard), console error capture, overflow measurement at 320/375/768/1024 px, mobile menu toggle. Browser verification remains open for Milestone 12 (tracker) and Milestone 14 (dashboard) per TASKS.md.
+- Official scheme verification: five source-checked records (status "source-checked", not independently verified). applicationStatus unknown; deadlines and required documents null where unpublished. No scheme is verified or open.
+- Known open items: TASKS.md Milestone 7 (invalid stored profile handling) and Milestone 8A (two unconfirmed source observations).
+
+## Profile improvement and scholarship details fix
+- Scholarship details fix: js/scheme-details.js. Root cause: fillVerification and fillOverview took (box, view) but the section loop called section.render(view, box), so the first section threw and the page hid its content. Fix: both signatures changed to (view, box).
+- Browser check of the five detail pages before the profile change: all 14 sections filled (headless Chrome, earlier run).
+- Seven new optional profile fields added: regularCourse, otherScholarship, droppedAfterXii, fullTimeCourse, coursePrescribed, eligibleCourseListed (each yes / no / notSure) and classXiiMarks (percentage, 0-100). Files: profile.html, js/profile.js, js/profile-model.js.
+- Class XII marks (percentage) are kept separate from classXiiPercentileRank (percentile rank, used by PM-USP).
+- Field-to-rule mapping: regularCourse, otherScholarship, droppedAfterXii -> pm-usp-central-sector; fullTimeCourse -> pm-yasasvi-top-class-college; coursePrescribed and classXiiMarks -> national-top-class-st; eligibleCourseListed -> tn-bc-mbc-dnc-post-matric.
+- Unknown-value handling: js/schemes.js rules tn-bc-domicile, tnc-domicile, tn-bc-course, pmusp-regular, pmusp-other-scholarship, pmusp-drop, yasasvi-full-time and nst-course now have unknownValues ['notSure'], so "Not sure" counts as missing (More Information Required), not as a failed match (Not Eligible). Scheme values, labels, deadlines and URLs unchanged.
+- Tests (Node, run by tester this round): tests/profile-model.test.js exit 0, 21 PASS. tests/eligibility.test.js exit 0, 19 PASS (new cases cover notSure as unknown, Tamil Nadu domicile, PM-USP outcomes, national ST, YASASVI). Other 10 test files exit 0; for application-tracker, comparison, dashboard and document-checklist the output was cut and only summary lines were seen.
+- node --check passed on js/profile.js, js/profile-model.js, js/schemes.js, js/scheme-details.js, js/eligibility.js and js/results.js.
+- Browser verification of the profile changes: NOT RUN. The tester stopped before writing a harness. Checks 1-9 (render, input behaviour, save, reload, marks vs percentile, notSure in results, editing updates results, five detail links, console errors) are all NOT RUN.
+- Environment note: a Python static server was started on port 8080 for the browser attempt (PID 17920) and was NOT stopped. It must be stopped manually.
+- Scholarship verification: five records. tn-bc-mbc-dnc-post-matric and tn-bc-mbc-dnc-central-institutions are partially-verified; pm-usp-central-sector, pm-yasasvi-top-class-college and national-top-class-st are unverified. None is confirmed open. Deadlines and documents remain null where unpublished.
+- Open items left unticked: Milestone 7 (invalid stored profile handling), Milestone 8A (unconfirmed source observations), browser verification (Milestones 12 and 14, plus this profile change).
+

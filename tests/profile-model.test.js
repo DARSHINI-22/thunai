@@ -198,6 +198,42 @@ test('(17) a marks-style value 92 is accepted as a percentile rank and stored un
   assert.deepStrictEqual(markKeys, [], 'no separate marks key may be stored');
 });
 
+test('(18) normalizeSaved keeps notSure for regularCourse and classXiiMarks 75 as the string "75"', () => {
+  const normalised = model.normalizeSaved({ ...oldSaved, regularCourse: 'notSure', classXiiMarks: 75 });
+  assert.strictEqual(normalised.regularCourse, 'notSure');
+  assert.strictEqual(normalised.classXiiMarks, '75');
+});
+
+test('(19) validate reports classXiiMarks 101', () => {
+  const errors = model.validate({ ...validValues, classXiiMarks: '101' });
+  assert.ok(errors.classXiiMarks, 'classXiiMarks 101 should produce an error');
+});
+
+test('(20) validate reports no errors for the new fields when all are blank', () => {
+  const blank = {
+    regularCourse: '', otherScholarship: '', droppedAfterXii: '', fullTimeCourse: '',
+    coursePrescribed: '', eligibleCourseListed: '', classXiiMarks: ''
+  };
+  const errors = model.validate({ ...validValues, ...blank });
+  ['regularCourse', 'otherScholarship', 'droppedAfterXii', 'fullTimeCourse', 'coursePrescribed', 'eligibleCourseListed', 'classXiiMarks']
+    .forEach((key) => assert.strictEqual(errors[key], undefined, key + ' should not be an error'));
+});
+
+test('(21) buildProfile stores new yes/no fields and classXiiMarks; blank values are omitted', () => {
+  const keys = ['regularCourse', 'otherScholarship', 'droppedAfterXii', 'fullTimeCourse', 'coursePrescribed', 'eligibleCourseListed'];
+  const filled = {};
+  keys.forEach((k) => { filled[k] = 'notSure'; });
+  const profile = model.buildProfile({ ...validValues, ...filled, classXiiMarks: '75' }, SAVED_AT);
+  keys.forEach((k) => assert.strictEqual(profile[k], 'notSure', k));
+  assert.strictEqual(profile.classXiiMarks, 75);
+
+  const blank = {};
+  keys.forEach((k) => { blank[k] = ''; });
+  const empty = model.buildProfile({ ...validValues, ...blank, classXiiMarks: '' }, SAVED_AT);
+  keys.forEach((k) => assert.ok(!(k in empty), k + ' must be omitted when blank'));
+  assert.ok(!('classXiiMarks' in empty), 'classXiiMarks must be omitted when blank');
+});
+
 
 if (failures === 0) {
   console.log('All profile-model tests passed.');

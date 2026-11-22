@@ -6,7 +6,8 @@
   var CATEGORY_OPTIONS = ['BC', 'MBC', 'DNC', 'OBC', 'EBC', 'DNT', 'ST', 'Other'];
   var INSTITUTION_OPTIONS = ['IIT', 'IIM', 'IIIT', 'NIT', 'Central University', 'Other'];
   var REQUIRED_CHOICES = ['district', 'educationLevel', 'collegeType', 'academicYear', 'incomeRange'];
-  var OPTIONAL_KEYS = ['name', 'category', 'tnDomicile', 'institution', 'institutionListed', 'annualFamilyIncome', 'classXiiPercentileRank'];
+  var YES_NO_KEYS = ['regularCourse', 'otherScholarship', 'droppedAfterXii', 'fullTimeCourse', 'coursePrescribed', 'eligibleCourseListed'];
+  var OPTIONAL_KEYS = ['name', 'category', 'tnDomicile', 'institution', 'institutionListed', 'annualFamilyIncome', 'classXiiPercentileRank'].concat(YES_NO_KEYS, ['classXiiMarks']);
   var MAX_INCOME = Number.MAX_SAFE_INTEGER;
 
   var MESSAGES = {
@@ -20,7 +21,8 @@
     incomeRange: 'Select your annual family income range.',
     firstGeneration: 'Select whether you are a first-generation graduate.',
     annualFamilyIncome: 'Enter your annual family income as a whole number of rupees (0 or more), or leave it empty.',
-    classXiiPercentileRank: 'Enter a percentile rank between 0 and 100.'
+    classXiiPercentileRank: 'Enter a percentile rank between 0 and 100.',
+    classXiiMarks: 'Enter your Class XII marks as a percentage between 0 and 100.'
   };
 
   function toText(value) {
@@ -95,6 +97,10 @@
     if (rank !== '' && parsePercentileRank(rank) === null) {
       errors.classXiiPercentileRank = MESSAGES.classXiiPercentileRank;
     }
+    var marks = toText(values.classXiiMarks).trim();
+    if (marks !== '' && parsePercentileRank(marks) === null) {
+      errors.classXiiMarks = MESSAGES.classXiiMarks;
+    }
     return errors;
   }
 
@@ -122,7 +128,14 @@
       institution: pickOption(data.institution, INSTITUTION_OPTIONS),
       institutionListed: pickOption(data.institutionListed, YES_NO_NOT_SURE),
       annualFamilyIncome: storedIncome(data.annualFamilyIncome),
-      classXiiPercentileRank: storedPercentileRank(data.classXiiPercentileRank)
+      classXiiPercentileRank: storedPercentileRank(data.classXiiPercentileRank),
+      regularCourse: pickOption(data.regularCourse, YES_NO_NOT_SURE),
+      otherScholarship: pickOption(data.otherScholarship, YES_NO_NOT_SURE),
+      droppedAfterXii: pickOption(data.droppedAfterXii, YES_NO_NOT_SURE),
+      fullTimeCourse: pickOption(data.fullTimeCourse, YES_NO_NOT_SURE),
+      coursePrescribed: pickOption(data.coursePrescribed, YES_NO_NOT_SURE),
+      eligibleCourseListed: pickOption(data.eligibleCourseListed, YES_NO_NOT_SURE),
+      classXiiMarks: storedPercentileRank(data.classXiiMarks)
     };
   }
 
@@ -145,7 +158,13 @@
       category: pickOption(values.category, CATEGORY_OPTIONS),
       tnDomicile: pickOption(values.tnDomicile, YES_NO_NOT_SURE),
       institution: pickOption(values.institution, INSTITUTION_OPTIONS),
-      institutionListed: pickOption(values.institutionListed, YES_NO_NOT_SURE)
+      institutionListed: pickOption(values.institutionListed, YES_NO_NOT_SURE),
+      regularCourse: pickOption(values.regularCourse, YES_NO_NOT_SURE),
+      otherScholarship: pickOption(values.otherScholarship, YES_NO_NOT_SURE),
+      droppedAfterXii: pickOption(values.droppedAfterXii, YES_NO_NOT_SURE),
+      fullTimeCourse: pickOption(values.fullTimeCourse, YES_NO_NOT_SURE),
+      coursePrescribed: pickOption(values.coursePrescribed, YES_NO_NOT_SURE),
+      eligibleCourseListed: pickOption(values.eligibleCourseListed, YES_NO_NOT_SURE)
     };
     Object.keys(optional).forEach(function (key) {
       if (optional[key]) {
@@ -159,6 +178,10 @@
     var rank = parsePercentileRank(values.classXiiPercentileRank);
     if (rank !== null) {
       profile.classXiiPercentileRank = rank;
+    }
+    var marks = parsePercentileRank(values.classXiiMarks);
+    if (marks !== null) {
+      profile.classXiiMarks = marks;
     }
     return profile;
   }
