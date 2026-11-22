@@ -573,34 +573,6 @@ Important considerations:
 - The current application does not provide a centralized student account or cloud synchronization system.
 - Students should avoid using shared devices for sensitive personal information.
 
----
-
-## ⚠️ Current Limitations
-
-THUNAI is a hackathon prototype and has certain limitations.
-
-### 1. Scholarship verification
-
-The five scholarship records have different levels of source verification. Not all scheme details have been independently confirmed against official sources.
-
-### 2. Application availability
-
-The application does not guarantee that a listed scholarship is currently accepting applications.
-
-### 3. Eligibility assessment
-
-Eligibility results are based on the information collected and the rules encoded in the application. They are not official decisions from scholarship authorities.
-
-### 4. Browser verification
-
-Automated tests were executed successfully, but complete interactive browser verification of every feature was not performed during the final QA process.
-
-### 5. Local data storage
-
-The application currently relies on browser local storage for supported persistence. It does not provide cloud-based synchronization or centralized account management.
-
----
-
 ## 🔮 Future Enhancements
 
 THUNAI can be extended with additional capabilities.
