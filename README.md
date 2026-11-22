@@ -622,7 +622,7 @@ Potential future improvements include:
 
 ## 👥 Team
 
-### CODEBENDERS
+### TESSERACT
 
 **ACE BUILDERS HACKATHON 2026**
 
