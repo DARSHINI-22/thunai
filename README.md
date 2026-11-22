@@ -633,8 +633,6 @@ Students must verify the latest eligibility criteria, benefits, deadlines, requi
 
 **THUNAI — Because Every Student Deserves to Know What's Within Reach.**
 
-Made with ❤️ by CODEBENDERS
-
 **ACE BUILDERS HACKATHON 2026**
 
 </p>
